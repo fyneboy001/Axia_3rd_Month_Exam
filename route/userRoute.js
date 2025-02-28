@@ -5,14 +5,14 @@ const {
   createUser,
   deleteUserAndPost,
   userLogin,
-  createkyc,
+  createKyc,
 } = require("../controller/userController");
-//const authorization = require("../middleware/authorization");
+const authorization = require("../middleware/authorization");
 
 //creating route for the different functions(CRUD operators)
 route.post("/user", createUser);
 route.post("/login", userLogin);
 route.delete("/user/:id", deleteUserAndPost);
-//route.post("/kyc", /*authorization,*/ createkyc);
+route.post("/kyc", authorization, createKyc);
 //exporting your route
 module.exports = route;

@@ -62,8 +62,7 @@ const userLogin = async (req, res) => {
     .json(checkUser);
 };
 
-// function to delete a user as well as the user's kyc and post
-
+//function to create kyc
 const createKyc = async (req, res) => {
   const body = req.body;
   const user = req.user;
@@ -86,14 +85,14 @@ const deleteUserAndPost = async (req, res) => {
 
   try {
     //command to delete users post first
-    await postModel.deleteMany({ user });
+    await postModel.findByIdAndDeleteMany(token);
     //const user = await userModel.findByIdAndDelete(id);
 
     //command to delete user's kyc next
-    await kycModel.deleteone({ user });
+    await kycModel.findByIdAndDeleteOne(token);
 
     //command to finally delete user account
-    await userModel.deleteone({ _id: user });
+    await userModel.findByIdAndDeleteOne(token);
     //successful message
     res.status(200).send("User Account Deleted Successfully");
   } catch (error) {
